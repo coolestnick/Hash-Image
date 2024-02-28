@@ -1,4 +1,5 @@
-pragma solidity >=0.5.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 contract HashImage {
     string public name = "HashImage"; // Contract name
@@ -35,8 +36,9 @@ contract HashImage {
         address payable _author = _image.author;
 
         require(_author != address(0), "Invalid author address");
+        require(msg.value > 0, "Tip amount must be greater than zero"); // Additional check for non-zero tip amount
 
-        // Transfer the tip amount to the author
+        // Transfer the tip amount to the author with proper error handling
         (bool success, ) = _author.call{value: msg.value}("");
         require(success, "Failed to send tip");
 
